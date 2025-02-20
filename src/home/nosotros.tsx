@@ -3,26 +3,60 @@ import fondopersona from "../assets/fondoperso.jpg"
 import deporte from "../assets/iniciocarusel/Quienessomos.png"
 import Autoplay from "embla-carousel-autoplay"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import equipo from "../assets/equipos/equipo.jpeg"
-import equipo1 from "../assets/equipos/equipo1.jpg"
+import equipo1 from "../assets/equipos/333009.png"
+import equipo2 from "../assets/equipos/Alakran (1).jpg"
+import equipo3 from "../assets/equipos/Dragones.jpg"
+import equipo4 from "../assets/equipos/Hunters blanco.jpg"
+import equipo5 from "../assets/equipos/LOGO AGUILAS.jpg"
+import equipo6 from "../assets/equipos/LOGO NJ.jpeg"
+import equipo7 from "../assets/equipos/LOGO VIKING@S.jpg"
+import equipo8 from "../assets/equipos/LOGO WOLFTEAM.png"
+import equipo9 from "../assets/equipos/Logo Storm Blanco.jpg"
+import equipo10 from "../assets/equipos/Winx.png"
+import equipo11 from "../assets/equipos/logo alpha.jpg"
+import equipo12 from "../assets/equipos/logo guerrer@s.jpg"
+import equipo13 from "../assets/equipos/logo hunters.jpg"
+import equipo14 from "../assets/equipos/logo israel.jpg"
+import equipo15 from "../assets/equipos/logo ludam.jpg"
+import equipo16 from "../assets/equipos/logo mas voley.jpg"
+import equipo17 from "../assets/equipos/logo pacific.jpg"
+import equipo18 from "../assets/equipos/logo panthers.jpg"
+import equipo19 from "../assets/equipos/logo saen.jpg"
+import equipo20 from "../assets/equipos/logo team zeta.jpg"
+import equipo21 from "../assets/equipos/logo valkiria.jpg"
+import equipo22 from "../assets/equipos/logo voley kids.jpg"
+import equipo23 from "../assets/equipos/logo warriors.jpg"
+
+
 import React from "react";
 
 
 function Nosotros() {
     const clubes = [//images para los clubes
-        { nombre: "CLUB DE VOLEIBOL ACADEMIA VOLEY KIDS", img: equipo },
-        { nombre: "CLUB DE VOLEIBOL ÁGUILAS", img: equipo },
-        { nombre: "CLUB DE VOLEIBOL CHIRIGUA VOLEY", img: equipo },
-        { nombre: "CLUB DE VOLEIBOL CHIRIGUA VOLEY", img: equipo1 },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo1 },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo1 },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo1 },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo1 },
-        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo },
+        { nombre: "CLUB DE VOLEIBOL VIKINGS", img: equipo1 },
+        { nombre: "CLUB DE VOLEIBOL ÁLAKRAN", img: equipo2 },
+        { nombre: "CLUB DE VOLEIBOL DRAGONES", img: equipo3 },
+        { nombre: "CLUB DE VOLEIBOL HUNTERS BLANCO", img: equipo4 },
+        { nombre: "CLUB DE VOLEIBOL AGUILAS", img: equipo5 },
+        { nombre: "CLUB DE VOLEIBOL ALPHA", img: equipo6 },
+        { nombre: "CLUB DE VOLEIBOL GUERREROS", img: equipo7 },
+        { nombre: "CLUB DE VOLEIBOL HUNTERS", img: equipo8 },
+        { nombre: "CLUB DE VOLEIBOL ISRAEL", img: equipo9 },
+        { nombre: "CLUB DE VOLEIBOL LUDAM", img: equipo10 },
+        { nombre: "CLUB DE VOLEIBOL MAS VOLEY", img: equipo11 },
+        { nombre: "CLUB DE VOLEIBOL NJ", img: equipo12 },
+        { nombre: "CLUB DE VOLEIBOL PACIFIC", img: equipo13 },
+        { nombre: "CLUB DE VOLEIBOL PANTHERS", img: equipo14 },
+        { nombre: "CLUB DE VOLEIBOL SAENS", img: equipo15 },
+        { nombre: "CLUB DE VOLEIBOL STORM", img: equipo16 },
+        { nombre: "CLUB DE VOLEIBOL ZETA", img: equipo17 },
+        { nombre: "CLUB DE VOLEIBOL VALKIRIA", img: equipo18 },
+        { nombre: "CLUB DE VOLEIBOL VIKINGS", img: equipo19 },
+        { nombre: "ACADEMIA DE VOLEY KIDS", img: equipo20 },
+        { nombre: "CLUB DE VOLEIBOL WARRIORS", img: equipo21 },
+        { nombre: "CLUB DE VOLEIBOL WOLFTEAM", img: equipo22 },
+        { nombre: "CLUB DE VOLEIBOL WINX", img: equipo23 },
+
         // Agrega más clubes según sea necesario
       ];
 

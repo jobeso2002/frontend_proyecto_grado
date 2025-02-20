@@ -30,7 +30,7 @@ function RegDeportista() {
             <img
               src={selectedImage}
               alt="Foto del Deportista"
-              className="w-32 h-32  object-cover border border-gray-300"
+              className="w-32 h-32 1 object-cover border border-gray-300"
             />
           ) : (
             <div className="w-32 h-32 flex items-center justify-center border border-gray-300  bg-gray-100">

@@ -1,103 +1,112 @@
-"use client"
-import { useAuth } from '@/auth/authprovider'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import liga from '@/assets/liga.jpg';
-import { registerUser } from '@/api'
-
+"use client";
+import { useAuth } from "@/auth/authprovider";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Link, Navigate } from "react-router-dom";
+import liga from "@/assets/liga.jpg";
 
 function Registro() {
-  const [username, setUsername]=useState("");
-  const [email, setEmail]=useState("");
-  const [password, setPassword]=useState("");
-  const navigate = useNavigate();
-  //aqui vamos hacer que uno debe iniciar sesion para que me pase a dasboard del resto no me va a dejar
+  
+
+  
+
   const auth = useAuth();
-  if(auth.isAuthenticated){
-    return <Navigate to="/dasboard"/>
+  if (auth.isAuthenticated) {
+    return <Navigate to="/dashboard" />;
   }
 
-  
+ 
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await registerUser(username, email, password);
-      alert(response.message);
-      navigate("/login"); // Redirige al login después del registro
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        alert(`Error al registrar usuario: ${error.message}`);
-      } else {
-        alert("Error desconocido al registrar usuario");
-      }
-      };
-  };
-  
 
-  
   return (
-    <div className="h-screen flex items-center justify-center bg-gradient-to-r from-green-300 to-white">
-        <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-            <div className="flex flex-col items-center mb-6">
-              <img
-                src={liga}
-                alt="Logo"
-                className="w-16 h-16 object-contain mb-4"
-              />
-              <h1 className="text-2xl font-bold text-green-800">REGISTRAR</h1>
-            </div>
-            <form onSubmit={handleSubmit}>
-              <div>
-                <Label htmlFor='userName' className='text-black mb-2 block text-sm'>
-                UserName
-                </Label>
-                <Input type='text'
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className='p-3 rounded block mb-2 border-green-700 text-black w-full'
-                placeholder='usuario'
-                />
-              </div>
-              <div>
-                <Label htmlFor='email' className='text-black mb-2 block text-sm'>
-                Email
-                </Label>    
-                <Input type='email'
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className='p-3 rounded block mb-2 border-green-700 text-black w-full'
-                placeholder='email@example'
-                />
-              </div>
-              <div>
-                <Label htmlFor='password' className='text-black mb-2 block text-sm'>
-                Contraseña
-                </Label>
-                <Input type='password' 
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className='p-3 rounded block mb-2 border-green-700 text-black w-full'
-                placeholder='********'
-                />
-              </div>
-      
-              <Button className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300">
-                  Registrar
-              </Button>
-            </form>
-          <p className='text-center text-sm text-black mt-4'>
-            ¿Ya tienes cuenta Inicia sesion?{" "}
-            <Link to="/login" className="text-green-600 hover:underline">
-              Iniciar sesion
-            </Link>
-          </p>
+    <div className="min-h-screen flex justify-center bg-green-300 px-4 py-8">
+      <div className="w-full max-w-3xl bg-white rounded-lg shadow-md p-8">
+        <div className="flex flex-col items-center mb-6">
+          <img src={liga} alt="Logo" className="w-16 h-16 object-contain mb-4" />
+          <h1 className="text-3xl font-bold text-green-800">REGISTRAR</h1>
+        </div>
+        
+        <form  className="grid grid-cols-2 gap-4">
+          <div className="col-span-2">
+            <h3 className="text-lg font-semibold mb-2">Datos Personales</h3>
+          </div>
+
+          <select name="tipo_documento"  className="border p-2 rounded w-full">
+            <option value="">Seleccione Tipo Documento</option>
+            <option value="CC">Cédula de Ciudadanía</option>
+            <option value="TI">Tarjeta de Identidad</option>
+            <option value="CE">Cédula de Extranjería</option>
+          </select>
+
+          <Input type="text" name="numero_documento" placeholder="Número de Documento"  className="border p-2 rounded" />
+          <Input type="date" name="fecha_exp_doc"  className="border p-2 rounded" />
+          <Input type="text" name="lugar_exp_doc" placeholder="Lugar de Expedición"  className="border p-2 rounded" />
+          <Input type="date" name="fecha_nacimiento"  className="border p-2 rounded" />
+          <Input type="text" name="primer_nombre" placeholder="Primer Nombre"  className="border p-2 rounded" />
+          <Input type="text" name="segundo_nombre" placeholder="Segundo Nombre"  className="border p-2 rounded" />
+          <Input type="text" name="primer_apellido" placeholder="Primer Apellido"  className="border p-2 rounded" />
+          <Input type="text" name="segundo_apellido" placeholder="Segundo Apellido"  className="border p-2 rounded" />
+
+          <select name="sexo"  className="border p-2 rounded">
+            <option value="">Seleccione Sexo</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Otro</option>
+          </select>
+
+          <select name="tipo_sangre"  className="border p-2 rounded">
+            <option value="">Seleccione Tipo de Sangre</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+
+          <Input type="number" name="edad" placeholder="Edad"  className="border p-2 rounded" />
+          <Input type="text" name="nacionalidad" placeholder="Nacionalidad"  className="border p-2 rounded" />
+          <Input type="text" name="telefono" placeholder="Teléfono"  className="border p-2 rounded" />
+
+          
+
+          <div className="col-span-2">
+            <h3 className="text-lg font-semibold mb-2">Credenciales</h3>
+          </div>
+
+          <Input type="email" name="email" placeholder="Correo Electrónico"  className="border p-2 rounded w-full" />
+          <Input type="password" name="password" placeholder="Contraseña"  className="border p-2 rounded w-full" />
+
+          <div className="col-span-2">
+            <h3 className="text-lg font-semibold mb-2">Seleccionar Rol</h3>
+          </div>
+
+          <select name="id_rol"  className="border p-2 rounded w-full">
+            <option value="">Seleccione un Rol</option>
+            <option value="1">Administrador</option>
+            <option value="2">Usuario</option>
+            <option value="3">Deportista</option>
+            <option value="4">Juez</option>
+          </select>
+
+          <div className="col-span-2">
+            <Button type="submit" className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300">
+              Registrar
+            </Button>
+          </div>
+        </form>
+
+        <p className="text-center text-sm text-black mt-4">
+          ¿Ya tienes cuenta?{" "}
+          <Link to="/login" className="text-green-600 hover:underline">
+            Iniciar sesión
+          </Link>
+        </p>
       </div>
     </div>
-  )
+  );
 }
 
-export default Registro
+export default Registro;

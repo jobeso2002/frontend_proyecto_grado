@@ -2,42 +2,31 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useState } from 'react';
-import { Link, Navigate, useNavigate} from 'react-router-dom';
-import { useAuth } from '@/auth/authprovider';
 import liga from "@/assets/liga.jpg";
-import { loginUser } from '@/api';
+import { Link } from 'react-router-dom';
+import { useAuthStore } from '@/store/authstore';
+import { useForm } from '@/components/hooks/useform';
+import { SingIn } from '@/interface/user.interface';
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const auth = useAuth();
-  const navigate = useNavigate();
-  
-  if (auth.isAuthenticated) {
-    return <Navigate to="/dasboard" />;
-  }
+  const {login} = useAuthStore();
+  const { form, resetForm, handleChange } = useForm<SingIn>({
+    email: "",
+    password: "",
+  });
 
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const userData = await loginUser(email, password);
-      auth.login(userData.token);  // ✅ Solo se pasa el token
-      alert("Inicio de sesión exitoso");
-      navigate("/dasboard");
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        alert(`Error al iniciar sesión: ${error.message}`);
-      } else {
-        alert("Error desconocido al iniciar sesión");
-      }
-    }
-  };
-  
-  
 
-  
+    console.log(form)
+
+    await login(form).then(() => {
+      resetForm();
+      // Redirect to dashboard page or home page after successful login
+    });
+  };
+
+
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-r from-green-300 to-white">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
@@ -52,6 +41,7 @@ function Login() {
             Inicie sesión en su cuenta
           </p>
         </div>
+        
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <Label
@@ -63,8 +53,11 @@ function Login() {
             <Input
               id="email"
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name='email'
+              value={form.email}
+              onChange={handleChange}
+             
+              
               className="p-3 rounded block border-gray-300 focus:ring-green-500 focus:border-green-500 w-full"
               placeholder="email@example.com"
             />
@@ -79,8 +72,11 @@ function Login() {
             <Input
               id='password'
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name='password'
+              value={form.password}
+              onChange={handleChange}
+              
+             
               className="p-3 rounded block border-gray-300 focus:ring-green-500 focus:border-green-500 w-full"
               placeholder="********"
             />
@@ -106,7 +102,7 @@ function Login() {
               ¿Has olvidado tu contraseña?
             </Link>
           </div>
-          <Button className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300">
+          <Button type='submit' className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300">
             Iniciar Sesión
           </Button>
         </form>
