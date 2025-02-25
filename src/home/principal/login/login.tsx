@@ -6,7 +6,7 @@ import liga from "@/assets/liga.jpg";
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '@/store/authstore';
 import { useForm } from '@/components/hooks/useform';
-import { SingIn } from '@/interface/user.interface';
+import { SingIn } from '@/interface/user/user.interface';
 
 function Login() {
   const {login} = useAuthStore();

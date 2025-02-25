@@ -32,18 +32,4 @@ export const Api = axios.create({
       return Promise.reject(error);
     }
   );
-
-  // Api.interceptors.request.use(
-  //   function (config) {
-  //     const token = sessionStorage.getItem("session");
-  //     if (token) {
-  //       config.headers["Authorization"] = `Bearer ${token}`;
-  //     }
-  //     return config;
-  //   },
-  //   (error) => {
-  //     return Promise.reject(error);
-  //   }
-  // );
-   
- 
+  

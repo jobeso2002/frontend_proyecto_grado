@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import noticia1 from "../assets/iniciocarusel/Noticias1.png";
-import noticia2 from "../assets/iniciocarusel/Noticias 2.png";
-import noticia3 from "../assets/iniciocarusel/Noticias3.png";
-import equipo from "../assets/iniciocarusel/jugadores1.png"
-import jugadores1 from "../assets/iniciocarusel/jugadores2.png"
-import jugadores2 from "../assets/iniciocarusel/jugadores3.png"
+import noticia1 from "@/assets/iniciocarusel/Noticias1.png";
+import noticia2 from "@/assets/iniciocarusel/Noticias 2.png";
+import noticia3 from "@/assets/iniciocarusel/Noticias3.png";
+import equipo from "@/assets/iniciocarusel/jugadores1.png"
+import jugadores1 from "@/assets/iniciocarusel/jugadores2.png"
+import jugadores2 from "@/assets/iniciocarusel/jugadores3.png"
 import Autoplay from "embla-carousel-autoplay"
 
 

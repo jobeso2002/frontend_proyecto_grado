@@ -1,5 +1,5 @@
 import { Api } from "@/config/axios_base.config";
-import { Persona, SingIn } from "@/interface/user.interface";
+import { Persona, SingIn } from "@/interface/user/user.interface";
 
 interface AuthResponse {
   token: string;

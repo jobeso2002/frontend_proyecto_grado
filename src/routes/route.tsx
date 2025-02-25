@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "@/home/login";
-import Registrar from "@/home/registrar";
-import Inicio from "@/home/inicio";
-import Dasboard from "@/home/dasboard";
+import Login from "@/home/principal/login/login";
+import Registrar from "@/home/principal/registrar/registrar";
+import Inicio from "@/home/principal/banner_inicio/inicio";
+import Dasboard from "@/home/principal/dasboard/dasboard";
 import Layout from "@/layout"; // Asegúrate de importar Layout
-import Nosotros from "@/home/nosotros";
+import Nosotros from "@/home/principal/nosotros/nosotros";
 import RegDeportista from "@/home/principal/deportista/regdeportista";
 import ListaDeportista from "@/home/principal/deportista/listadeportista";
 import ContactoFamiliarDep from "@/home/principal/deportista/contactofamiliardep";

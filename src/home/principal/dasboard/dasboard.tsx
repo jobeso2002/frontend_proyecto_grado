@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import liga from "../assets/nuevofondo.jpg";
-import RegDeportista from "./principal/deportista/regdeportista";
-import ListaDeportista from "./principal/deportista/listadeportista";
-import UserList from "./principal/gestion usuarios/listausuario";
-import { useAuth } from "@/auth/authprovider";
-import ContactoFamiliarDep from "./principal/deportista/contactofamiliardep";
-import Soporte from "./principal/deportista/soporte";
-import Club from "./principal/deportista/club";
+import liga from "@/assets/nuevofondo.jpg"
+import RegDeportista from "../deportista/regdeportista";
+import ListaDeportista from "../deportista/listadeportista";
+import UserList from "../gestion usuarios/listausuario";
+import ContactoFamiliarDep from "../deportista/contactofamiliardep";
+import Soporte from "../deportista/soporte";
+import Club from "../deportista/club";
+import { useAuthStore } from "@/store/authstore";
 
 
 function Dashboard() {
@@ -23,7 +23,7 @@ function Dashboard() {
   
   const [activeView, setActiveView] = useState("Dashboard");
 
-  const {  logout } = useAuth();
+  const {  logout } = useAuthStore();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const renderContent = () => {
