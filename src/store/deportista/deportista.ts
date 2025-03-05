@@ -1,11 +1,11 @@
-import { Deportista } from "@/interface/deportista/deportista.interface";
+import { CreateDeportista, Deportista } from "@/interface/deportista/deportista.interface";
 import { ConsultarDeportistas, CreateDeportistas } from "@/services/deportista/deportista.service";
 import { create } from "zustand";
 
 interface DeportistaProp {
     deportista: Deportista[];
     Consultar: () => Promise<void>; // Consultar ahora devuelve una Promesa<void>
-    crear_deportista: (data: Deportista) => Promise<void>;
+    crear_deportista: (data: CreateDeportista) => Promise<void>;
 }
 
 export const useDeportistaStore = create<DeportistaProp>((set) => ({
@@ -19,7 +19,7 @@ export const useDeportistaStore = create<DeportistaProp>((set) => ({
             console.error("Error al consultar deportista:", error);
         }
     },
-    crear_deportista: async (data: Deportista) => {
+    crear_deportista: async (data: CreateDeportista) => {
         try {
             await CreateDeportistas(data);
         } catch (error) {

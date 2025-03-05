@@ -15,10 +15,15 @@ export const useForm = <T extends Record<string, any>>(initialState: T) => {
         [name]: value,
       }));
     };
+
+    // Nueva función para actualización manual
+    const handleManualChange = (name: keyof T, value: any) => {
+      setForm(prev => ({ ...prev, [name]: value }));
+    };
   
     const resetForm = () => {
       setForm(initialState);
     };
   
-    return { handleChange, form, resetForm, setForm };
+    return { handleChange, form, resetForm, setForm, handleManualChange };
   };

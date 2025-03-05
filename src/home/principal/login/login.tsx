@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import liga from "@/assets/liga.jpg";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/store/authstore';
 import { useForm } from '@/components/hooks/useform';
 import { SingIn } from '@/interface/user/user.interface';
@@ -15,6 +15,8 @@ function Login() {
     password: "",
   });
 
+  const navigate = useNavigate(); 
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -22,7 +24,7 @@ function Login() {
 
     await login(form).then(() => {
       resetForm();
-      // Redirect to dashboard page or home page after successful login
+      navigate("/dasboard");// Redirect to dashboard page or home page after successful login
     });
   };
 

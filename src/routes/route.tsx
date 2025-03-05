@@ -25,11 +25,11 @@ export const RoutesIndex = () => {
           <Route element={<RutePrublic IsAuth={isAuthenticated} />}>
             <Route path="/" element={<Inicio />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/registrar" element={<Registrar />} />
+
             <Route path="/nosotros" element={<Nosotros />} />
           </Route>
         </Route>
-        
+
         {/* Ruta privadas */}
         <Route
           element={
@@ -41,6 +41,7 @@ export const RoutesIndex = () => {
             />
           }
         >
+          <Route path="/registrar" element={<Registrar />} />
           <Route path="/dasboard" element={<Dasboard />} />
           <Route path="/regdeportista" element={<RegDeportista />} />
           <Route path="/listadeportista" element={<ListaDeportista />} />
