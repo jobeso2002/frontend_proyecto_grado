@@ -9,6 +9,8 @@ import { Register } from "@/interface/user/user.interface";
 import { RolesStore } from "@/store/role/role";
 import { useEffect } from "react";
 import { useUserStore } from "@/store/usuario/user";
+import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 
 function Registro() {
   const { crear_persona } = useUserStore();
@@ -41,6 +43,8 @@ function Registro() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    console.log("Datos enviados:", form); // Verifica que `id_rol` no sea null
+
     try {
       await crear_persona(form);
       console.log("Registro exitoso");
@@ -90,12 +94,18 @@ function Registro() {
             className="border p-2 rounded"
             pattern="\d*"
           />
-          <Input
-            type="date"
-            name="fecha_exp_doc"
-            onChange={handleChange}
-            className="border p-2 rounded"
-          />
+          <div className="flex flex-col">
+            <Label htmlFor="fecha_exp_doc" className="text-gray-700 text-sm">
+              Fecha de Expedición
+            </Label>
+            <Input
+              type="date"
+              name="fecha_exp_doc"
+              onChange={handleChange} 
+              className="border p-2 rounded"
+            />
+          </div>
+
           <Input
             type="text"
             name="lugar_exp_doc"
@@ -104,12 +114,19 @@ function Registro() {
             className="border p-2 rounded"
             pattern="[A-Za-záéíóúÁÉÍÓÚñÑ ]+"
           />
+          
+          <div className="flex flex-col"> 
+          <Label htmlFor="fecha_exp_doc" className="text-gray-700 text-sm">
+              Fecha de Nacimiento
+            </Label>
           <Input
             type="date"
             name="fecha_nacimiento"
             onChange={handleChange}
             className="border p-2 rounded"
           />
+          </div>
+          
           <Input
             type="text"
             name="primer_nombre"
@@ -214,6 +231,19 @@ function Registro() {
             className="border p-2 rounded w-full"
           />
 
+          <select
+            name="id_rol"
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+          >
+            <option value="">Seleccione un Rol</option>
+            {role.map((rol) => (
+              <option key={rol.id} value={rol.id}>
+                {rol.name}
+              </option>
+            ))}
+          </select>
+
           <div className="col-span-2">
             <Button
               type="submit"
@@ -223,6 +253,12 @@ function Registro() {
             </Button>
           </div>
         </form>
+        <p className="text-center text-sm text-gray-700 mt-4">
+          ¿Ya tienes cuenta?{" "}
+          <Link to="/login" className="text-green-600 hover:underline">
+            Iniciar Sesion
+          </Link>
+        </p>
       </div>
     </div>
   );

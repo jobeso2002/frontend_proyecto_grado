@@ -3,6 +3,8 @@ export interface Deportista {
     posicion: string;
     estado: string;
     numero_camisa: number;
+    estatura: number;
+    peso: number;
     id_club: number;
     id_persona: number;
 }

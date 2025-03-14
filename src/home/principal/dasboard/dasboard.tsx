@@ -1,25 +1,29 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import liga from "@/assets/nuevofondo.jpg"
-import RegDeportista from "../deportista/regdeportista";
-import ListaDeportista from "../deportista/listadeportista";
-import UserList from "../gestion usuarios/listausuario";
-import ContactoFamiliarDep from "../deportista/contactofamiliardep";
-import Soporte from "../deportista/soporte";
-import Club from "../deportista/club";
+import RegDeportista from "./deportista/regdeportista";
+import ListaDeportista from "./deportista/listadeportista";
+import ListaUsuarios from "./gestion usuarios/listausuario";
+import ContactoFamiliarDep from "./deportista/contactofamiliardep";
+import Soporte from "./deportista/soporte";
+import Club from "./club/club";
 import { useAuthStore } from "@/store/authstore";
+import TransferenciaJugador from "./club/transferencia";
+import ListaClubes from "./deportista/listadeportista";
 
 
 function Dashboard() {
   const [deportistasMenuOpen, setDeportistasMenuOpen] = useState(false);
   const [usuariosMenuOpen, setUsuariosMenuOpen] = useState(false);
-  const [especialistaMenuOpen, setEspecialistaMenuOpen] = useState(false);
-  const [medicamentoMenuOpen, setMedicamentoMenuOpen] = useState(false);
+  const [LigaMenuOpen, setLigasMenuOpen] = useState(false);
+  const [EventosMenuOpen, setEventosMenuOpen] = useState(false);
+  const [ClubesMenuOpen, setClubesMenuOpen] = useState(false);
 
   const toggleDeportistasMenu = () => setDeportistasMenuOpen(!deportistasMenuOpen);
   const toggleUsuariosMenu = () => setUsuariosMenuOpen(!usuariosMenuOpen);
-  const toggleEspecialistaMenu = () => setEspecialistaMenuOpen(!especialistaMenuOpen);
-  const toggleMedicinaMenu = () => setMedicamentoMenuOpen(!medicamentoMenuOpen);
+  const toggleLigas = () => setLigasMenuOpen(!LigaMenuOpen);
+  const toggleEventos = () => setEventosMenuOpen(!EventosMenuOpen);
+  const toggleClubes = () => setClubesMenuOpen(!ClubesMenuOpen);
   
   const [activeView, setActiveView] = useState("Dashboard");
 
@@ -40,13 +44,17 @@ function Dashboard() {
       case "ListaDeportista":
         return <ListaDeportista />;
         case "ListaUsuario":
-          return <UserList />;
+          return <ListaUsuarios />;
         case "contactofamiliar":
           return <ContactoFamiliarDep/>
         case "soporte":
           return <Soporte/>
         case "club":
           return <Club/>
+        case "transferencia":
+            return <TransferenciaJugador/>
+        case "ListaClubes":
+              return <ListaClubes/>
       default:
         return (
           <div>
@@ -189,6 +197,20 @@ function Dashboard() {
                           Soportes
                         </button>
                       </li>
+                      
+                    </ul>
+                  )}
+                </div>
+              </li>
+              <li>
+
+                <div>
+                  <button onClick={toggleClubes}
+                    className="flex items-center p-2 rounded hover:bg-green-800 w-full text-left">
+                    <span className="ml-3">Clubes </span>
+                  </button>
+                  {ClubesMenuOpen && (
+                    <ul className="pl-6 space-y-2">
                       <li>
                         <button
                           onClick={() => setActiveView("club")}
@@ -197,19 +219,32 @@ function Dashboard() {
                           Club
                         </button>
                       </li>
-                    </ul>
-                  )}
+                      <li>
+                        <button onClick={() => setActiveView("ListaClubes")}
+                          className="block p-2 rounded hover:bg-green-800">
+                        Listar Clubes
+                        </button>
+                        
+                      </li>
+                      <li>
+                        <button
+                          onClick={()=> setActiveView("transferencia")}
+                          className="block p-2 rounded hover:bg-green-800"
+                        >
+                          Transferir Jugador
+                        </button>
+                      </li>
+                    </ul>)}
                 </div>
-              </li>
-              <li>
+
               <div>
                   <button
-                    onClick={toggleEspecialistaMenu}
+                    onClick={toggleLigas}
                     className="flex items-center p-2 rounded hover:bg-green-800 w-full text-left"
                   >
-                    <span className="ml-3">ligas </span>
+                    <span className="ml-3">Ligas </span>
                   </button>
-                  {especialistaMenuOpen && (
+                  {LigaMenuOpen && (
                     <ul className="pl-6 space-y-2">
                       <li>
                         <Link
@@ -234,12 +269,12 @@ function Dashboard() {
               <li>
               <div>
                   <button
-                    onClick={toggleMedicinaMenu}
+                    onClick={toggleEventos}
                     className="flex items-center p-2 rounded hover:bg-green-800 w-full text-left"
                   >
-                    <span className="ml-3">evento</span>
+                    <span className="ml-3">Evento</span>
                   </button>
-                  {medicamentoMenuOpen && (
+                  {EventosMenuOpen && (
                     <ul className="pl-6 space-y-2">
                       <li>
                         <Link

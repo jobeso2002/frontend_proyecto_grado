@@ -15,7 +15,7 @@ interface UserProp {
   actualizar_persona: (id: number, data: Partial<Register>) => Promise<void>;
 }
 
-export const useUserStore = create<UserProp>((set) => ({
+export const useUserStore = create<UserProp>((set) => ({  
   persona: [],
 
   Consultar_persona: async () => {
@@ -82,17 +82,7 @@ export const useUserStore = create<UserProp>((set) => ({
     } catch (error) {
       console.error("Error al actualizar usuario:", error);
     }
-    //otra version de actualizar_persona
-    // actualizar_persona: async (id: number, data: Partial<Register>) => {
-    //     try {
-    //         await ActualizarUsuario(id, data);
-    //         set((state) => ({
-    //             persona: state.persona.map((user) => (user.id === id ? { ...user, ...data } : user)),
-    //         }));
-    //         console.log(`Usuario con ID ${id} actualizado`);
-    //     } catch (error) {
-    //         console.error("Error al actualizar usuario:", error);
-    //     }
-    // }
+   
   },
 }));
+

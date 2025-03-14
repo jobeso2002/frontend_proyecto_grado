@@ -9,6 +9,10 @@ export const ConsultarUsuario = () => {
   return Api.get("/persona");
 };
 
+// export const ConsultarUsuario = (id: string) => {
+//   return Api.get(`/persona/${id}`);
+// };
+
 export const EliminarUsuario = (id: number) => {
   return Api.delete(`/persona/${id}`);
 };

@@ -12,7 +12,7 @@ export const useForm = <T extends Record<string, any>>(initialState: T) => {
   
       setForm((prev) => ({
         ...prev,
-        [name]: value,
+        [name]:  name === "id_rol" ? Number(value) : value, // Convierte id_rol a número
       }));
     };
 

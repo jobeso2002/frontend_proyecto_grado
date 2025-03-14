@@ -6,6 +6,7 @@ interface DeportistaProp {
     deportista: Deportista[];
     Consultar: () => Promise<void>; // Consultar ahora devuelve una Promesa<void>
     crear_deportista: (data: CreateDeportista) => Promise<void>;
+    
 }
 
 export const useDeportistaStore = create<DeportistaProp>((set) => ({

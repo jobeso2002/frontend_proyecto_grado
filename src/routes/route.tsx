@@ -5,14 +5,16 @@ import Inicio from "@/home/principal/banner_inicio/inicio";
 import Dasboard from "@/home/principal/dasboard/dasboard";
 import Layout from "@/layout"; // Asegúrate de importar Layout
 import Nosotros from "@/home/principal/nosotros/nosotros";
-import RegDeportista from "@/home/principal/deportista/regdeportista";
-import ListaDeportista from "@/home/principal/deportista/listadeportista";
-import ContactoFamiliarDep from "@/home/principal/deportista/contactofamiliardep";
-import Soporte from "@/home/principal/deportista/soporte";
-import Club from "@/home/principal/deportista/club";
+import RegDeportista from "@/home/principal/dasboard/deportista/regdeportista";
+import ListaDeportista from "@/home/principal/dasboard/deportista/listadeportista";
+import ContactoFamiliarDep from "@/home/principal/dasboard/deportista/contactofamiliardep";
+import Soporte from "@/home/principal/dasboard/deportista/soporte";
+import Club from "@/home/principal/dasboard/club/club";
 import { useAuthStore } from "@/store/authstore";
 import { RutePrivate, RutePrublic } from "./private/route";
 import { RoleType } from "@/enums/roles/role";
+import TransferenciaJugador from '../home/principal/dasboard/club/transferencia';
+import ListaClubes from "@/home/principal/dasboard/deportista/listadeportista";
 
 export const RoutesIndex = () => {
   const { isAuthenticated, user, loading } = useAuthStore();
@@ -25,7 +27,7 @@ export const RoutesIndex = () => {
           <Route element={<RutePrublic IsAuth={isAuthenticated} />}>
             <Route path="/" element={<Inicio />} />
             <Route path="/login" element={<Login />} />
-
+            <Route path="/registrar" element={<Registrar />} />
             <Route path="/nosotros" element={<Nosotros />} />
           </Route>
         </Route>
@@ -41,7 +43,7 @@ export const RoutesIndex = () => {
             />
           }
         >
-          <Route path="/registrar" element={<Registrar />} />
+          
           <Route path="/dasboard" element={<Dasboard />} />
           <Route path="/regdeportista" element={<RegDeportista />} />
           <Route path="/listadeportista" element={<ListaDeportista />} />
@@ -51,6 +53,8 @@ export const RoutesIndex = () => {
           />
           <Route path="/soporte" element={<Soporte />} />
           <Route path="/club" element={<Club />} />
+          <Route path="/transferencia" element={<TransferenciaJugador/>} />
+          <Route path="/listaclubes" element={<ListaClubes/>} />
         </Route>
       </Routes>
     </Router>
