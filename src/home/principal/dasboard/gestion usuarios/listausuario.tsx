@@ -3,13 +3,13 @@ import { useUserStore } from "@/store/usuario/user";
 import { Link } from "react-router-dom";
 
 function ListaUsuarios() {
-  const { persona, Consultar_persona, eliminar_persona, actualizar_persona } =
+  const { persona,  consultarUsuario, eliminar_persona, actualizar_persona } =
     useUserStore();
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    Consultar_persona();
-  }, [Consultar_persona]);
+    consultarUsuario();
+  }, [ consultarUsuario]);
 
   const handleDelete = async (id: number) => {
     if (confirm("¿Estás seguro de eliminar este usuario?")) {

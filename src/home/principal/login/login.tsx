@@ -20,7 +20,7 @@ function Login() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(form)
+    
 
     await login(form).then(() => {
       resetForm();

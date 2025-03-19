@@ -9,9 +9,9 @@ export const ConsultarUsuario = () => {
   return Api.get("/persona");
 };
 
-// export const ConsultarUsuario = (id: string) => {
-//   return Api.get(`/persona/${id}`);
-// };
+export const ConsultarUsuarioId = (numero_documento: string) => {
+  return Api.get(`/persona/buscar/${numero_documento}`);
+};
 
 export const EliminarUsuario = (id: number) => {
   return Api.delete(`/persona/${id}`);
@@ -20,3 +20,4 @@ export const EliminarUsuario = (id: number) => {
 export const ActualizarUsuario = (id: number, data: Partial<Register>) => {
   return Api.patch(`/persona/${id}`, data);
 };
+

@@ -1,22 +1,17 @@
+import React, { useEffect, useState } from "react";
 import { useForm } from "@/components/hooks/useform";
 import { Button } from "@/components/ui/button";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-// import { CreateDeportista } from "@/interface/deportista/deportista.interface";
-
 import { useClubStore } from "@/store/club/club";
 import { useDeportistaStore } from "@/store/deportista/deportista";
 import { useUserStore } from "@/store/usuario/user";
-import { UploadCloud } from "lucide-react";
-
-import React, { useEffect, useState } from "react";
+// import { UploadCloud } from "lucide-react";
 
 function RegDeportista() {
   const { crear_deportista } = useDeportistaStore();
-  const { Consultar_persona, persona } = useUserStore();
-  const { Consultar, club } = useClubStore();
+  const { ConsultarUsuarioId, persona } = useUserStore();
+  const { ConsultarClub, club } = useClubStore();
 
   const { form, handleChange, setForm } = useForm({
     posicion: "",
@@ -41,77 +36,65 @@ function RegDeportista() {
     nacionalidad: "",
     telefono: "",
     email: "",
-    
   });
 
-  //montar imagenes estaticas
-
-  const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
-
+  // const [selectedImage, setSelectedImage] = React.useState<string | null>(null);
   const [idpersona, setIdpersona] = useState("");
 
   useEffect(() => {
     if (idpersona) {
-      Consultar_persona(idpersona);
+      ConsultarUsuarioId(idpersona);
     }
-  }, [idpersona, Consultar_persona]);
+  }, [idpersona, ConsultarUsuarioId]);
 
   useEffect(() => {
-    if (persona.length > 0) {
-      const datos = persona.find(
-        (p) => p.numero_documento === p.numero_documento
-      );
-      if (datos) {
+    if (persona) {
         setForm((prevForm) => ({
           ...prevForm,
-          id_persona: datos.id,
-          tipo_documento: datos.tipo_documento,
-          numero_documento: datos.numero_documento,
-          fecha_exp_doc: datos.fecha_exp_doc,
-          lugar_exp_doc: datos.lugar_exp_doc,
-          fecha_nacimiento: datos.fecha_nacimiento,
-          primer_nombre: datos.primer_nombre,
-          segundo_nombre: datos.segundo_nombre,
-          primer_apellido: datos.primer_apellido,
-          segundo_apellido: datos.segundo_apellido,
-          sexo: datos.sexo,
-          tipo_sangre: datos.tipo_sangre,
-          edad: datos.edad,
-          nacionalidad: datos.nacionalidad,
-          telefono: datos.telefono,
-          email: datos.email,
+          id_persona: persona.id,
+          tipo_documento: persona.tipo_documento,
+          numero_documento: persona.numero_documento,
+          fecha_exp_doc: persona.fecha_exp_doc,
+          lugar_exp_doc: persona.lugar_exp_doc,
+          fecha_nacimiento: persona.fecha_nacimiento,
+          primer_nombre: persona.primer_nombre,
+          segundo_nombre: persona.segundo_nombre,
+          primer_apellido: persona.primer_apellido,
+          segundo_apellido: persona.segundo_apellido,
+          sexo: persona.sexo,
+          tipo_sangre: persona.tipo_sangre,
+          edad: persona.edad,
+          nacionalidad: persona.nacionalidad,
+          telefono: persona.telefono,
+          email: persona.email,
         }));
-      }
+      
     }
-  }, [persona, setForm]);
+  }, [persona, setForm, idpersona]);
+
+  
 
   useEffect(() => {
     if (club.length === 0) {
-      Consultar();
+      ConsultarClub();
     }
-  }, [Consultar, club.length]);
+  }, [ConsultarClub, club.length]);
 
-  useEffect(() => {
-    if (persona.length === 0) {
-      Consultar_persona(idpersona);
-    }
-  }, [Consultar_persona, persona.length, idpersona]);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const fileReader = new FileReader();
-      fileReader.onload = () => {
-        setSelectedImage(fileReader.result as string);
-      };
-      fileReader.readAsDataURL(e.target.files[0]);
-    }
-  };
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const fileReader = new FileReader();
+  //     fileReader.onload = () => {
+  //       setSelectedImage(fileReader.result as string);
+  //     };
+  //     fileReader.readAsDataURL(e.target.files[0]);
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      await crear_deportista(form); // Llamar a la función de registrar usuario
+      await crear_deportista(form); // Llamar a la función de registrar deportista
       console.log("Registro exitoso");
     } catch (error) {
       console.error("Error en el registro:", error);
@@ -122,15 +105,15 @@ function RegDeportista() {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Registrar Deportista</h1>
       <form onSubmit={handleSubmit} className="grid grid-cols-4 gap-6">
-        <div className="col-span-1 flex flex-col items-center">
+        {/* <div className="col-span-1 flex flex-col items-center">
           {selectedImage ? (
             <img
               src={selectedImage}
               alt="Foto del Deportista"
-              className="w-32 h-32 1 object-cover border border-gray-300"
+              className="w-32 h-32 object-cover border border-gray-300"
             />
           ) : (
-            <div className="w-32 h-32 flex items-center justify-center border border-gray-300  bg-gray-100">
+            <div className="w-32 h-32 flex items-center justify-center border border-gray-300 bg-gray-100">
               <UploadCloud className="h-8 w-8 text-gray-400" />
             </div>
           )}
@@ -148,7 +131,7 @@ function RegDeportista() {
           >
             Subir Foto
           </Button>
-        </div>
+        </div> */}
 
         <div>
           <Label htmlFor="tipo_documento" className="block mb-2 font-semibold">
@@ -158,6 +141,7 @@ function RegDeportista() {
             id="tipo_documento"
             name="tipo_documento"
             value={form.tipo_documento}
+            onChange={handleChange}
             className="border p-2 rounded"
           >
             <option value="">Tipo de Documento</option>
@@ -190,30 +174,33 @@ function RegDeportista() {
             id="lugar_exp_doc"
             name="lugar_exp_doc"
             value={form.lugar_exp_doc}
+            onChange={handleChange}
             className="border border-gray-300 p-2 rounded w-full"
           />
         </div>
 
         <div className="flex flex-col">
-          <Label htmlFor="fecha_exp_doc" className="text-gray-700 text-sm">
+          <Label htmlFor="fecha_exp_doc" className="text-black text-sm">
             Fecha de Expedición
           </Label>
           <Input
             type="date"
             name="fecha_exp_doc"
             value={form.fecha_exp_doc}
+            onChange={handleChange}
             className="border p-2 rounded"
           />
         </div>
 
         <div className="flex flex-col">
-          <Label htmlFor="fecha_nacimiento" className="text-gray-700 text-sm">
+          <Label htmlFor="fecha_nacimiento" className="text-black text-sm">
             Fecha Nacimiento:
           </Label>
           <Input
             type="date"
             name="fecha_nacimiento"
             value={form.fecha_nacimiento}
+            onChange={handleChange}
             className="border p-2 rounded"
           />
         </div>
@@ -227,6 +214,7 @@ function RegDeportista() {
             id="primer_nombre"
             name="primer_nombre"
             value={form.primer_nombre}
+            onChange={handleChange}
             className="border border-gray-300 p-2 rounded w-full"
           />
         </div>
@@ -240,6 +228,7 @@ function RegDeportista() {
             id="segundo_nombre"
             name="segundo_nombre"
             value={form.segundo_nombre}
+            onChange={handleChange}
             className="border border-gray-300 p-2 rounded w-full"
           />
         </div>
@@ -253,15 +242,13 @@ function RegDeportista() {
             id="primer_apellido"
             name="primer_apellido"
             value={form.primer_apellido}
+            onChange={handleChange}
             className="border border-gray-300 p-2 rounded w-full"
           />
         </div>
 
         <div>
-          <label
-            htmlFor="segundo_apellido"
-            className="block mb-2 font-semibold"
-          >
+          <label htmlFor="segundo_apellido" className="block mb-2 font-semibold">
             Segundo Apellido:
           </label>
           <input
@@ -269,6 +256,7 @@ function RegDeportista() {
             id="segundo_apellido"
             name="segundo_apellido"
             value={form.segundo_apellido}
+            onChange={handleChange}
             className="border border-gray-300 p-2 rounded w-full"
           />
         </div>
@@ -281,6 +269,7 @@ function RegDeportista() {
             id="tipo_sangre"
             name="tipo_sangre"
             value={form.tipo_sangre}
+            onChange={handleChange}
             className="border p-2 rounded"
           >
             <option value="">Seleccione Tipo de Sangre</option>
@@ -303,6 +292,7 @@ function RegDeportista() {
             id="sexo"
             name="sexo"
             value={form.sexo}
+            onChange={handleChange}
             className="border p-2 rounded"
           >
             <option value="">Seleccione Sexo</option>
@@ -321,6 +311,7 @@ function RegDeportista() {
             id="email"
             name="email"
             value={form.email}
+            onChange={handleChange}
             className="border border-gray-300 p-2 rounded w-full"
           />
         </div>
@@ -355,14 +346,11 @@ function RegDeportista() {
         </div>
 
         <div>
-          <label
-            htmlFor="Estado_Afiliacion"
-            className="block mb-2 font-semibold"
-          >
+          <label htmlFor="estado" className="block mb-2 font-semibold">
             Estado:
           </label>
           <select
-            name="Estado_Afiliacion"
+            name="estado"
             onChange={handleChange}
             value={form.estado}
             className="border border-gray-300 p-2 rounded w-full"
@@ -405,14 +393,21 @@ function RegDeportista() {
           <label htmlFor="club" className="block mb-2 font-semibold">
             Club:
           </label>
-          <input
-            type="number"
-            id="id_club"
+          <select
             name="id_club"
-            value={form.id_club}
             onChange={handleChange}
-          />
+            className="border border-gray-300 p-2 rounded w-full"
+          >
+            <option value="">Seleccione Club</option>
+            {club.map((club) => (
+              <option key={club.id} value={club.id}>
+                {club.nombre_club}
+              </option>
+            ))}
+          </select>
         </div>
+
+       
 
         <div className="col-span-4 flex justify-center">
           <Button className="bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-300">

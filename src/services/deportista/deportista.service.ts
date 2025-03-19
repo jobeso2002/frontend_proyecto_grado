@@ -10,6 +10,4 @@ export const ConsultarDeportistas = () => {
   return Api.get("/deportista");
 };
 
-export const BuscarPersona = (numero_documento: string) => {
-  return Api.get(`/persona/buscar/${numero_documento}`);
-};
+

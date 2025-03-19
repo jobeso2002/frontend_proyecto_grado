@@ -13,6 +13,7 @@ import ListaClubes from "./deportista/listadeportista";
 
 
 function Dashboard() {
+  
   const [deportistasMenuOpen, setDeportistasMenuOpen] = useState(false);
   const [usuariosMenuOpen, setUsuariosMenuOpen] = useState(false);
   const [LigaMenuOpen, setLigasMenuOpen] = useState(false);
@@ -27,8 +28,10 @@ function Dashboard() {
   
   const [activeView, setActiveView] = useState("Dashboard");
 
-  const {  logout } = useAuthStore();
+  const { logout } = useAuthStore();
   const [menuOpen, setMenuOpen] = useState(false);
+
+
 
   const renderContent = () => {
     switch (activeView) {
@@ -71,7 +74,11 @@ function Dashboard() {
       {/* Encabezado */}
       <header className="flex items-center justify-between bg-green-700 text-white px-4 py-3">
         {/* Nombre del usuario */}
-        <h1 className="text-lg font-bold">veremos</h1>
+        
+        <h1 className="text-lg font-bold">Sistema Integral De Gestion Administrativa Y Deportiva</h1>
+
+        
+
         {/* Ícono de usuario */}
         <div className="relative">
         <button
@@ -110,7 +117,8 @@ function Dashboard() {
             </div>
 
             <h6 className="mt-4 text-lg font-bold">
-              nombre de la persona
+             {/* { user ? `${user.primer_nombre}` : "Usuario no autenticado" } */}
+             no
             </h6>
           </div>
 

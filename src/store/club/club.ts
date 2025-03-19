@@ -1,16 +1,16 @@
-import { Club } from "@/interface/club/club.interface";
+import { Club, CreateClub } from "@/interface/club/club.interface";
 import { ConsultarClub, CreatClub } from "@/services/club/club.service";
 import { create } from "zustand";
 
 interface ClubProp {
     club: Club[];
-    Consultar: () => Promise<void>; // Consultar ahora devuelve una Promesa<void>
-    crear_deportista: (data: Club) => Promise<void>;
+    ConsultarClub: () => Promise<void>; // Consultar ahora devuelve una Promesa<void>
+    crear_Club: (data: CreateClub) => Promise<void>;
 }
 
 export const useClubStore = create<ClubProp>((set) => ({
     club: [],
-    Consultar: async () => {
+    ConsultarClub: async () => {
         try {
             const response = await ConsultarClub();
             const consultar: Club[] = response.data;
@@ -19,7 +19,7 @@ export const useClubStore = create<ClubProp>((set) => ({
             console.error("Error al consultar usuario:", error);
         }
     },
-    crear_deportista: async (data: Club) => {
+    crear_Club: async (data: CreateClub) => {
         try {
             await CreatClub(data);
         } catch (error) {
