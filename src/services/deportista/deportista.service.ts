@@ -10,4 +10,10 @@ export const ConsultarDeportistas = () => {
   return Api.get("/deportista");
 };
 
+export const VerificareExisteDeportista = (numero_documento: string) => {
+  return Api.get(`/deportista/verificar/${numero_documento}`);
+};
+
+
+
 

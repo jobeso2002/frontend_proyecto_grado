@@ -24,6 +24,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   initializeAuth: () => {
     const storedToken = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
+
     if (storedToken && storedUser) {
       // Activar el loading al iniciar la solicitud
       try {
@@ -32,6 +33,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         const decryptedToken = decryptData(storedToken);
         console.log(decryptedToken)
         const decryptedUser = decryptData(storedUser);
+
         set({
           user: {
             email: decryptedUser.email,

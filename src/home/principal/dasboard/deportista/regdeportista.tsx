@@ -9,7 +9,7 @@ import { useUserStore } from "@/store/usuario/user";
 // import { UploadCloud } from "lucide-react";
 
 function RegDeportista() {
-  const { crear_deportista } = useDeportistaStore();
+  const { crear_deportista,  } = useDeportistaStore();
   const { ConsultarUsuarioId, personaConsulta } = useUserStore();
   const { ConsultarClub, club } = useClubStore();
 
@@ -72,22 +72,13 @@ function RegDeportista() {
     }
   }, [personaConsulta, setForm, idpersona]);
 
+  
+
   useEffect(() => {
     if (club.length === 0) {
       ConsultarClub();
     }
   }, [ConsultarClub, club.length]);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    try {
-      await crear_deportista(form); // Llamar a la función de registrar deportista
-      console.log("Registro exitoso");
-    } catch (error) {
-      console.error("Error en el registro:", error);
-    }
-  };
 
   // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   if (e.target.files && e.target.files[0]) {
@@ -99,7 +90,16 @@ function RegDeportista() {
   //   }
   // };
 
-  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      await crear_deportista(form); // Llamar a la función de registrar deportista
+      console.log("Registro exitoso");
+    } catch (error) {
+      console.error("Error en el registro:", error);
+    }
+  };
 
   return (
     <div className="p-6">

@@ -25,10 +25,16 @@ function ListaUsuarios() {
     }
   };
 
+<<<<<<< HEAD
   // Filtrar usuarios por nombre
   const filteredUsers = persona.filter((user:Persona) =>
+=======
+  const filteredUsers = persona.filter((user: Persona) =>
+>>>>>>> 47d1fd0 (error para registrar usuario problema en el axios me deja registrar deportista si elimino la conf en el axio puedo reg usuario)
     user.primer_nombre.toLowerCase().includes(search.toLowerCase())
   );
+
+  
 
   return (
     <div className="p-4">
@@ -58,7 +64,11 @@ function ListaUsuarios() {
           </tr>
         </thead>
         <tbody>
+<<<<<<< HEAD
           {filteredUsers.map((user:Persona) => (
+=======
+          {filteredUsers.map((user: Persona) => (
+>>>>>>> 47d1fd0 (error para registrar usuario problema en el axios me deja registrar deportista si elimino la conf en el axio puedo reg usuario)
             <tr key={user.id} className="hover:bg-gray-50 transition duration-200">
               <td className="px-4 py-2 border-b">{user.id}</td>
               <td className="px-4 py-2 border-b">{user.primer_nombre}</td>
