@@ -30,6 +30,7 @@ export const useAuthStore = create<AuthState>((set) => ({
        
         // Desencriptar los datos
         const decryptedToken = decryptData(storedToken);
+        console.log(decryptedToken)
         const decryptedUser = decryptData(storedUser);
         set({
           user: {
