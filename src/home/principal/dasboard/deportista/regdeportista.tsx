@@ -10,7 +10,7 @@ import { useUserStore } from "@/store/usuario/user";
 
 function RegDeportista() {
   const { crear_deportista } = useDeportistaStore();
-  const { ConsultarUsuarioId, persona } = useUserStore();
+  const { ConsultarUsuarioId, personaConsulta } = useUserStore();
   const { ConsultarClub, club } = useClubStore();
 
   const { form, handleChange, setForm } = useForm({
@@ -48,47 +48,35 @@ function RegDeportista() {
   }, [idpersona, ConsultarUsuarioId]);
 
   useEffect(() => {
-    if (persona) {
+    if (personaConsulta) {
         setForm((prevForm) => ({
           ...prevForm,
-          id_persona: persona.id,
-          tipo_documento: persona.tipo_documento,
-          numero_documento: persona.numero_documento,
-          fecha_exp_doc: persona.fecha_exp_doc,
-          lugar_exp_doc: persona.lugar_exp_doc,
-          fecha_nacimiento: persona.fecha_nacimiento,
-          primer_nombre: persona.primer_nombre,
-          segundo_nombre: persona.segundo_nombre,
-          primer_apellido: persona.primer_apellido,
-          segundo_apellido: persona.segundo_apellido,
-          sexo: persona.sexo,
-          tipo_sangre: persona.tipo_sangre,
-          edad: persona.edad,
-          nacionalidad: persona.nacionalidad,
-          telefono: persona.telefono,
-          email: persona.email,
+          id_persona: personaConsulta.id,
+          tipo_documento: personaConsulta.tipo_documento,
+          numero_documento: personaConsulta.numero_documento,
+          fecha_exp_doc: personaConsulta.fecha_exp_doc,
+          lugar_exp_doc: personaConsulta.lugar_exp_doc,
+          fecha_nacimiento: personaConsulta.fecha_nacimiento,
+          primer_nombre: personaConsulta.primer_nombre,
+          segundo_nombre: personaConsulta.segundo_nombre,
+          primer_apellido: personaConsulta.primer_apellido,
+          segundo_apellido: personaConsulta.segundo_apellido,
+          sexo: personaConsulta.sexo,
+          tipo_sangre: personaConsulta.tipo_sangre,
+          edad: personaConsulta.edad,
+          nacionalidad: personaConsulta.nacionalidad,
+          telefono: personaConsulta.telefono,
+          email: personaConsulta.email,
         }));
       
     }
-  }, [persona, setForm, idpersona]);
-
-  
+  }, [personaConsulta, setForm, idpersona]);
 
   useEffect(() => {
     if (club.length === 0) {
       ConsultarClub();
     }
   }, [ConsultarClub, club.length]);
-
-  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     const fileReader = new FileReader();
-  //     fileReader.onload = () => {
-  //       setSelectedImage(fileReader.result as string);
-  //     };
-  //     fileReader.readAsDataURL(e.target.files[0]);
-  //   }
-  // };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -100,6 +88,18 @@ function RegDeportista() {
       console.error("Error en el registro:", error);
     }
   };
+
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files && e.target.files[0]) {
+  //     const fileReader = new FileReader();
+  //     fileReader.onload = () => {
+  //       setSelectedImage(fileReader.result as string);
+  //     };
+  //     fileReader.readAsDataURL(e.target.files[0]);
+  //   }
+  // };
+
+  
 
   return (
     <div className="p-6">

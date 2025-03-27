@@ -11,7 +11,8 @@ import { create } from "zustand";
 
 
 interface UserProp {
-  persona: Persona | null;
+  persona: Persona[];
+  personaConsulta: Persona | null;
   consultarUsuario: () => Promise<void>;
   ConsultarUsuarioId: (numero_documento: string) => Promise<void>; // Consultar ahora devuelve una Promesa<void>
   crear_persona: (data: Register) => Promise<void>;
@@ -21,13 +22,14 @@ interface UserProp {
 
 
 export const useUserStore = create<UserProp>((set) => ({  
-  persona: null,
+  persona: [],
+  personaConsulta: null,
 
   consultarUsuario: async () => {
     try {
       const response = await ConsultarUsuario();
       const personas_consultar: Persona[] = response.data;
-      set(() => ({ persona: personas_consultar[0] || null })); // Asegurarse de que persona recibe un array válido
+      set({persona: personas_consultar}); // Asegurarse de que persona recibe un array válido
     } catch (error) {
       console.error("Error al consultar personas:", error);
     }
@@ -37,7 +39,7 @@ export const useUserStore = create<UserProp>((set) => ({
     try {
       const response = await ConsultarUsuarioId(numero_documento);
       const consultar_persona: Persona = response.data;
-      set(() => ({ persona: consultar_persona })); // Asegurarse de que persona recibe un array válido
+      set({personaConsulta: consultar_persona}); // Asegurarse de que persona recibe un array válido
     } catch (error) {
       console.error("Error al consultar usuario:", error);
     }
@@ -58,7 +60,7 @@ export const useUserStore = create<UserProp>((set) => ({
     
       await EliminarUsuario(id);
       set((state) => ({
-        persona: state.persona?.id === id ? null : state.persona, // Eliminar si coincide con el id
+        persona: state.persona.filter((user) => user.id !== id), // Eliminar si coincide con el id
       }));
       console.log("Usuario eliminado exitosamente");
     } catch (error) {
@@ -72,7 +74,9 @@ export const useUserStore = create<UserProp>((set) => ({
 
       await ActualizarUsuario(id, data);
       set((state) => ({
-        persona: state.persona?.id === id ? { ...state.persona, ...data } : state.persona, // Actualizar si coincide con el id
+        persona: state.persona.map((user)=>
+        user.id === id ? {...user, ...data} : user
+        ), // Actualizar si coincide con el id
       }));
       console.log("Usuario actualizado exitosamente");
     } catch (error) {

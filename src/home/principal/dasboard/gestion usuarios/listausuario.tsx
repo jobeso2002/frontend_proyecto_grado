@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useUserStore } from "@/store/usuario/user";
 import { Link } from "react-router-dom";
+import { Persona } from "@/interface/user/user.interface";
 
 function ListaUsuarios() {
   const { persona,  consultarUsuario, eliminar_persona, actualizar_persona } =
@@ -25,7 +26,7 @@ function ListaUsuarios() {
   };
 
   // Filtrar usuarios por nombre
-  const filteredUsers = persona.filter((user) =>
+  const filteredUsers = persona.filter((user:Persona) =>
     user.primer_nombre.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -57,7 +58,7 @@ function ListaUsuarios() {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user) => (
+          {filteredUsers.map((user:Persona) => (
             <tr key={user.id} className="hover:bg-gray-50 transition duration-200">
               <td className="px-4 py-2 border-b">{user.id}</td>
               <td className="px-4 py-2 border-b">{user.primer_nombre}</td>
