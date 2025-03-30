@@ -1,4 +1,4 @@
-function ListaDeportista() {
+function ListaClub() {
   const jugadores = [
     {
       tipoDocumento: "T.I.",
@@ -102,4 +102,4 @@ function ListaDeportista() {
   );
 }
 
-export default ListaDeportista;
+export default ListaClub;

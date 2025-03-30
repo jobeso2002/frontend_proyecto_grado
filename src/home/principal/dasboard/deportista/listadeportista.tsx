@@ -1,105 +1,194 @@
-function ListaClubes() {
-  const jugadores = [
-    {
-      tipoDocumento: "T.I.",
-      numeroDocumento: "1087567234",
-      lugarExpedicion: "Bogotá",
-      fechaExpedicion: "2023-01-10",
-      fechaNacimiento: "2005-05-15",
-      primerNombre: "Camila",
-      segundoNombre: "Andrea",
-      primerApellido: "Gomez",
-      segundoApellido: "Perez",
-      tipoSangre: "O+",
-      genero: "Femenino",
-      estatura: 165,
-      peso: 55,
-      direccion: "Calle 123",
-      celular: "3001234567",
-      email: "camila@example.com",
-    },
-    {
-      tipoDocumento: "C.C.",
-      numeroDocumento: "1087567235",
-      lugarExpedicion: "Medellín",
-      fechaExpedicion: "2022-05-12",
-      fechaNacimiento: "1998-03-21",
-      primerNombre: "Andres",
-      segundoNombre: "Felipe",
-      primerApellido: "Martinez",
-      segundoApellido: "Gomez",
-      tipoSangre: "A+",
-      genero: "Masculino",
-      estatura: 175,
-      peso: 70,
-      direccion: "Carrera 45",
-      celular: "3109876543",
-      email: "andres@example.com",
-    },
-  ];
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Deportista } from "@/interface/deportista/deportista.interface";
+import { useDeportistaStore } from "@/store/deportista/deportista";
+import { useEffect, useState } from "react";
+import { useUserStore } from "@/store/usuario/user";
+import { Persona } from "@/interface/user/user.interface";
+
+// Interface para el tipo combinado
+interface DeportistaCompleto extends Persona, Deportista {
+  id_deportista: number | null;
+}
+
+function ListaDeportista() {
+  const { deportistas, ConsultarDeportista: cargarDeportistas } = useDeportistaStore();
+  const { persona, consultarUsuario } = useUserStore();
+  const [busqueda, setBusqueda] = useState("");
+  const [deportistasCompletos, setDeportistasCompletos] = useState<DeportistaCompleto[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Cargar datos iniciales
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        await Promise.all([cargarDeportistas(), consultarUsuario()]);
+      } catch (error) {
+        console.error("Error al cargar datos:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchData();
+  }, [cargarDeportistas, consultarUsuario]);
+
+  // Combinar datos cuando ambos arrays estén disponibles
+  useEffect(() => {
+    if (deportistas.length > 0 && persona.length > 0) {
+      console.log("Depurando combinación:");
+      console.log("Total deportistas:", deportistas.length);
+      console.log("Total personas:", persona.length);
+      
+      const combinados = persona.reduce((acc: DeportistaCompleto[], persona) => {
+        const deportistaData = deportistas.find(d => d.id_persona === persona.id);
+        
+        if (deportistaData) {
+          console.log(`Combinando: Persona ID ${persona.id} con Deportista ID ${deportistaData.id}`);
+          acc.push({
+            ...persona,
+            ...deportistaData,
+            id_deportista: deportistaData.id,
+          });
+        } else {
+          console.log(`No se encontró deportista para persona ID ${persona.id}`);
+        }
+        
+        return acc;
+      }, []);
+      
+      console.log("Total combinados:", combinados.length);
+      setDeportistasCompletos(combinados);
+    } else {
+      console.log("No hay suficientes datos para combinar");
+    }
+  }, [deportistas, persona]);
+
+  const deportistasFiltrados = deportistasCompletos.filter((deportista) => {
+    const term = busqueda.toLowerCase();
+    return (
+      deportista.primer_nombre?.toLowerCase().includes(term) ||
+      deportista.primer_apellido?.toLowerCase().includes(term) ||
+      deportista.numero_documento?.includes(term) ||
+      deportista.email?.toLowerCase().includes(term)
+    );
+  });
+
+  if (loading) {
+    return <div className="p-6 text-center">Cargando datos...</div>;
+  }
 
   return (
-    <div className="p-6 bg-white shadow-md rounded-md max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-center">
-        Lista de club - TOTAL {jugadores.length}
-      </h1>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Listado de Deportistas</h1>
+      
+      <div className="mb-6 flex justify-between items-center">
+        <Input
+          type="text"
+          placeholder="Buscar por nombre, apellido, documento o email"
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          className="w-1/2"
+        />
+        <Button className="bg-blue-600 hover:bg-blue-700">
+          Exportar a Excel
+        </Button>
+      </div>
+
       <div className="overflow-x-auto">
-        <table className="table-auto w-full border border-gray-300 text-sm">
-          <thead className="bg-gray-200">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead className="bg-gray-50">
             <tr>
-              <th className="border border-gray-300 px-3 py-2">Tipo Doc.</th>
-              <th className="border border-gray-300 px-3 py-2">Número Doc.</th>
-              <th className="border border-gray-300 px-3 py-2">Lugar Exp.</th>
-              <th className="border border-gray-300 px-3 py-2">F. Exp.</th>
-              <th className="border border-gray-300 px-3 py-2">F. Nac.</th>
-              <th className="border border-gray-300 px-3 py-2">Primer Nombre</th>
-              <th className="border border-gray-300 px-3 py-2">Segundo Nombre</th>
-              <th className="border border-gray-300 px-3 py-2">Primer Apellido</th>
-              <th className="border border-gray-300 px-3 py-2">Segundo Apellido</th>
-              <th className="border border-gray-300 px-3 py-2">Tipo Sangre</th>
-              <th className="border border-gray-300 px-3 py-2">Género</th>
-              <th className="border border-gray-300 px-3 py-2">Estatura</th>
-              <th className="border border-gray-300 px-3 py-2">Peso</th>
-              <th className="border border-gray-300 px-3 py-2">Direccion</th>
-              <th className="border border-gray-300 px-3 py-2">Celular</th>
-              <th className="border border-gray-300 px-3 py-2">Email</th>
-              
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Documento</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre Completo</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Edad</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contacto</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Datos Deportivos</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
             </tr>
           </thead>
-          <tbody>
-            {jugadores.map((jugador, index) => (
-              <tr
-                key={index}
-                className="text-center odd:bg-white even:bg-gray-100"
-              >
-                <td className="border border-gray-300 px-3 py-2">{jugador.tipoDocumento}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.numeroDocumento}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.lugarExpedicion}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.fechaExpedicion}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.fechaNacimiento}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.primerNombre}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.segundoNombre}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.primerApellido}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.segundoApellido}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.tipoSangre}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.genero}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.estatura}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.peso}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.direccion}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.celular}</td>
-                <td className="border border-gray-300 px-3 py-2">{jugador.email}</td>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {deportistasFiltrados.map((deportista) => (
+              <tr key={deportista.id}>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">
+                    {deportista.tipo_documento}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {deportista.numero_documento}
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    Exp: {deportista.lugar_exp_doc} - {deportista.fecha_exp_doc}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm font-medium text-gray-900">
+                    {deportista.primer_nombre} {deportista.segundo_nombre}
+                  </div>
+                  <div className="text-sm text-gray-900">
+                    {deportista.primer_apellido} {deportista.segundo_apellido}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {deportista.sexo} | {deportista.tipo_sangre}
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    Nac: {deportista.fecha_nacimiento} | {deportista.nacionalidad}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{deportista.edad} años</div>
+                  <div className="text-sm text-gray-500">
+                    {deportista.estatura} cm / {deportista.peso} kg
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">{deportista.email}</div>
+                  <div className="text-sm text-gray-500">{deportista.telefono}</div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <div className="text-sm text-gray-900">
+                    Posición: {deportista.posicion}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    Camisa: #{deportista.numero_camisa}
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    Estado: <span className={`font-semibold ${deportista.estado === 'Activo' ? 'text-green-600' : 'text-red-600'}`}>
+                      {deportista.estado}
+                    </span>
+                  </div>
+                  <div className="text-xs text-gray-400">
+                    Club ID: {deportista.id_club}
+                  </div>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <button
+                    className="text-blue-600 hover:text-blue-900 mr-4"
+                    onClick={() => console.log("Editar", deportista.id)}
+                  >
+                    Editar
+                  </button>
+                  <button
+                    className="text-red-600 hover:text-red-900"
+                    // onClick={() => handleEliminar(deportista.id)}
+                  >
+                    Eliminar
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <button
-        className="mt-6 bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 transition duration-300 block mx-auto"
-      >
-        + Nuevo Jugador
-      </button>
+
+      {deportistasFiltrados.length === 0 && (
+        <div className="text-center py-8 text-gray-500">
+          {deportistasCompletos.length === 0 ? "Cargando deportistas..." : "No se encontraron deportistas con ese criterio de búsqueda"}
+        </div>
+      )}
     </div>
   );
 }
 
-export default ListaClubes;
+export default ListaDeportista;
