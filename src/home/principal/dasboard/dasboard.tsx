@@ -9,7 +9,10 @@ import Soporte from "./deportista/soporte";
 import Club from "./club/club";
 import { useAuthStore } from "@/store/authstore";
 import TransferenciaJugador from "./club/transferencia";
-import ListaClubes from "./deportista/listadeportista";
+
+import RegistrarEvento from "./eventos/registrarevento";
+import ListarEventos from "./eventos/listarevento";
+import ListaClub from "./club/listaclub";
 
 
 function Dashboard() {
@@ -56,8 +59,12 @@ function Dashboard() {
           return <Club/>
         case "transferencia":
             return <TransferenciaJugador/>
-        case "ListaClubes":
-              return <ListaClubes/>
+        case "Listaclube":
+              return <ListaClub/>
+        case "RegistrarEvento":
+          return <RegistrarEvento/>
+        case "ListaEventos":
+          return <ListarEventos/>
       default:
         return (
           <div>
@@ -228,7 +235,7 @@ function Dashboard() {
                         </button>
                       </li>
                       <li>
-                        <button onClick={() => setActiveView("ListaClubes")}
+                        <button onClick={() => setActiveView("Listaclube")}
                           className="block p-2 rounded hover:bg-green-800">
                         Listar Clubes
                         </button>
@@ -285,20 +292,20 @@ function Dashboard() {
                   {EventosMenuOpen && (
                     <ul className="pl-6 space-y-2">
                       <li>
-                        <Link
-                          to="/regdeportista"
+                        <button
+                          onClick={()=> setActiveView("RegistrarEvento")}
                           className="block p-2 rounded hover:bg-green-800"
                         >
-                          opcion1
-                        </Link>
+                          Registrar Evento
+                        </button>
                       </li>
                       <li>
-                        <Link
-                          to="/listar-deportistas"
+                        <button
+                          onClick={()=> setActiveView("ListaEventos")}
                           className="block p-2 rounded hover:bg-green-800"
                         >
-                          opcion2
-                        </Link>
+                            Listar Evento
+                        </button>
                       </li>
                     </ul>
                   )}

@@ -14,7 +14,10 @@ import { useAuthStore } from "@/store/authstore";
 import { RutePrivate, RutePrublic } from "./private/route";
 import { RoleType } from "@/enums/roles/role";
 import TransferenciaJugador from '../home/principal/dasboard/club/transferencia';
-import ListaClubes from "@/home/principal/dasboard/deportista/listadeportista";
+
+import RegistrarEvento from "@/home/principal/dasboard/eventos/registrarevento";
+import ListarEventos from "@/home/principal/dasboard/eventos/listarevento";
+import ListaClub from "@/home/principal/dasboard/club/listaclub";
 
 export const RoutesIndex = () => {
   const { isAuthenticated, user, loading } = useAuthStore();
@@ -54,7 +57,9 @@ export const RoutesIndex = () => {
           <Route path="/soporte" element={<Soporte />} />
           <Route path="/club" element={<Club />} />
           <Route path="/transferencia" element={<TransferenciaJugador/>} />
-          <Route path="/listaclubes" element={<ListaClubes/>} />
+          <Route path="/listaclube" element={<ListaClub/>} />
+          <Route path="/regevento" element={<RegistrarEvento/>} />
+          <Route path="/listaevento" element={<ListarEventos/>} />
         </Route>
       </Routes>
     </Router>
